@@ -2,7 +2,7 @@ POST http://localhost:8080/api/socks/income
 Content-Type: application/json
 
 {
-  "color": "red",
+  "color": "rd",
   "cottonPart": 170,
   "quantity": 144
 }
