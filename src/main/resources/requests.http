@@ -2,9 +2,9 @@ POST http://localhost:8080/api/socks/income
 Content-Type: application/json
 
 {
-  "color": "rod",
-  "cottonPart": 70,
-  "quantity": 44
+  "color": "red",
+  "cottonPart": 170,
+  "quantity": 144
 }
 
 ###
@@ -18,4 +18,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/socks?color=rd&operation=leSSthan&cottonPart=91
+GET http://localhost:8080/api/socks?color=red&operation=&cottonPart=91

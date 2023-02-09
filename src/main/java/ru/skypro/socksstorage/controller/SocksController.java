@@ -28,7 +28,7 @@ public class SocksController {
 
     /**
      * Get quantity of socks from storage filtered by cotton part(can use 3 operation)
-     * Use method of service {@link SocksService#getQuantityOfSocks(String, String, Byte)}
+     * Use method of service {@link SocksService#getQuantityOfSocks(String, String, Integer)}
      */
     @ApiResponses({
             @ApiResponse(
@@ -44,9 +44,10 @@ public class SocksController {
                     description = "Internal Server Error"
             )})
     @GetMapping
-    public ResponseEntity<String> getQuantityOfSocks(@RequestParam @NotBlank @Size(min = 3, max = 50) String color,
-                                                     @RequestParam @NotBlank String operation,
-                                                     @RequestParam @Min(0) @Max(100) Byte cottonPart) {
+    public ResponseEntity<String> getQuantityOfSocks(@RequestParam @NotBlank(message = "color can't be empty") @Size(min = 3, max = 50, message = "color must be more 2 characters and less 51 characters") String color,
+                                                     @RequestParam @NotBlank(message = "operation can't be empty") String operation,
+                                                     @RequestParam @Min(value = 0,message = "cotton part must be >=0")
+                                                         @Max(value = 100, message = "cotton part must be <=100") Integer cottonPart) {
         return new ResponseEntity<>(socksService.getQuantityOfSocks(color, operation, cottonPart), HttpStatus.OK);
     }
 

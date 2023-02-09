@@ -11,7 +11,7 @@ public interface SocksService {
      * @param cottonPart % of cotton which need
      * @return quantity of needed socks in storage
      */
-    String getQuantityOfSocks(String color, String operation, Byte cottonPart);
+    String getQuantityOfSocks(String color, String operation, Integer cottonPart);
 
     /**
      * Increase quantity of existed socks in storage or add new socks to storage if socks are not existed

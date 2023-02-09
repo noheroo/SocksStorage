@@ -59,9 +59,9 @@ class SocksControllerTest {
     }
 
     @Test
-    void getQuantityOfSocks() throws Exception {
+    void getQuantityOfSocksUseEqual() throws Exception {
 
-        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyByte())).thenReturn(List.of(SOCKS1));
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks")
@@ -73,9 +73,37 @@ class SocksControllerTest {
                 .andExpect(content().string(SOCKS1.getQuantity().toString()));
     }
     @Test
-    void getQuantityOfSocksWrongOperation() throws Exception {
+    void getQuantityOfSocksUseMoreThan() throws Exception {
 
-        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyByte())).thenReturn(List.of(SOCKS1));
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/socks")
+                        .queryParam("color", COLOR1)
+                        .queryParam("operation", OPERATION3)
+                        .queryParam("cottonPart", COTTONPART3.toString()))
+
+                .andExpect(status().isOk())
+                .andExpect(content().string(SOCKS1.getQuantity().toString()));
+    }
+    @Test
+    void getQuantityOfSocksUseLessThan() throws Exception {
+
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/socks")
+                        .queryParam("color", COLOR1)
+                        .queryParam("operation", OPERATION2)
+                        .queryParam("cottonPart", COTTONPART2.toString()))
+
+                .andExpect(status().isOk())
+                .andExpect(content().string(SOCKS1.getQuantity().toString()));
+    }
+    @Test
+    void getQuantityOfSocksByWrongOperation() throws Exception {
+
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks")
@@ -86,9 +114,9 @@ class SocksControllerTest {
                 .andExpect(status().isBadRequest());
     }
     @Test
-    void getQuantityOfSocksWrongCottonPart() throws Exception {
+    void getQuantityOfSocksByWrongCottonPart() throws Exception {
 
-        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyByte())).thenReturn(List.of(SOCKS1));
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks")
@@ -99,9 +127,9 @@ class SocksControllerTest {
                 .andExpect(status().isBadRequest());
     }
     @Test
-    void getQuantityOfSocksWrongColor() throws Exception {
+    void getQuantityOfSocksByWrongColor() throws Exception {
 
-        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyByte())).thenReturn(List.of(SOCKS1));
+        when(socksRepository.findAllByColorAndCottonPartEquals(anyString(), anyInt())).thenReturn(List.of(SOCKS1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks")
@@ -119,7 +147,7 @@ class SocksControllerTest {
         socksDtoObject.put("cottonPart", COTTONPART1);
         socksDtoObject.put("quantity", QUANTITY2);
 
-        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyByte())).thenReturn(SOCKS1);
+        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyInt())).thenReturn(SOCKS1);
         when(socksRepository.save(any(Socks.class))).thenReturn(SOCKS2);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -130,7 +158,7 @@ class SocksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID1))
                 .andExpect(jsonPath("$.color").value(COLOR1))
-                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1.intValue()))
+                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1))
                 .andExpect(jsonPath("$.quantity").value(QUANTITY3));
     }
     @Test
@@ -140,7 +168,7 @@ class SocksControllerTest {
         socksDtoObject.put("cottonPart", COTTONPART1);
         socksDtoObject.put("quantity", QUANTITY1);
 
-        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyByte())).thenReturn(null);
+        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyInt())).thenReturn(null);
         when(socksRepository.save(any(Socks.class))).thenReturn(SOCKS1);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -151,7 +179,7 @@ class SocksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID1))
                 .andExpect(jsonPath("$.color").value(COLOR1))
-                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1.intValue()))
+                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1))
                 .andExpect(jsonPath("$.quantity").value(QUANTITY1));
     }
 
@@ -162,7 +190,7 @@ class SocksControllerTest {
         socksDtoObject.put("cottonPart", COTTONPART1);
         socksDtoObject.put("quantity", QUANTITY2);
 
-        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyByte())).thenReturn(SOCKS1);
+        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyInt())).thenReturn(SOCKS1);
         when(socksRepository.save(any(Socks.class))).thenReturn(SOCKS3);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -173,7 +201,7 @@ class SocksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID1))
                 .andExpect(jsonPath("$.color").value(COLOR1))
-                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1.intValue()))
+                .andExpect(jsonPath("$.cottonPart").value(COTTONPART1))
                 .andExpect(jsonPath("$.quantity").value(QUANTITY4));
     }
     @Test
@@ -183,7 +211,7 @@ class SocksControllerTest {
         socksDtoObject.put("cottonPart", COTTONPART1);
         socksDtoObject.put("quantity", QUANTITY1);
 
-        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyByte())).thenReturn(null);
+        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyInt())).thenReturn(null);
         when(socksRepository.save(any(Socks.class))).thenReturn(SOCKS3);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -201,7 +229,7 @@ class SocksControllerTest {
         socksDtoObject.put("cottonPart", COTTONPART1);
         socksDtoObject.put("quantity", QUANTITY1);
 
-        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyByte())).thenReturn(SOCKS3);
+        when(socksRepository.findSocksByColorAndCottonPart(anyString(), anyInt())).thenReturn(SOCKS3);
         when(socksRepository.save(any(Socks.class))).thenReturn(SOCKS3);
 
         mockMvc.perform(MockMvcRequestBuilders

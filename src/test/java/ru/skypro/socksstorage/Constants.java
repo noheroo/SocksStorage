@@ -6,8 +6,10 @@ public class Constants {
     public static final String COLORWRONG = "or";
     public static final Integer ID1   = 1;
 
-    public static final Byte COTTONPART1 = 40;
-    public static final Byte COTTONPARTWRONG = 102;
+    public static final Integer COTTONPART1 = 40;
+    public static final Integer COTTONPART2 = 41;
+    public static final Integer COTTONPART3 = 39;
+    public static final Integer COTTONPARTWRONG = 102;
     public static final Integer QUANTITY1 = 20;
     public static final Integer QUANTITY2 = 16;
     public static final Integer QUANTITY3 = 36;

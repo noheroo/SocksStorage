@@ -8,11 +8,11 @@ import java.util.List;
 
 @Repository
 public interface SocksRepository extends JpaRepository<Socks, Integer> {
-    Socks findSocksByColorAndCottonPart(String color, Byte cottonPart);
+    Socks findSocksByColorAndCottonPart(String color, Integer cottonPart);
 
-    List<Socks> findAllByColorAndCottonPartLessThan(String color, Byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartLessThan(String color, Integer cottonPart);
 
-    List<Socks> findAllByColorAndCottonPartEquals(String color, Byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartEquals(String color, Integer cottonPart);
 
-    List<Socks> findAllByColorAndCottonPartGreaterThan(String color, Byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartGreaterThan(String color, Integer cottonPart);
 }

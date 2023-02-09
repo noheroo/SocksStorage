@@ -6,6 +6,6 @@ import lombok.Data;
 public class SocksDto {
     private Integer id;
     private String color;
-    private Byte cottonPart;
+    private Integer cottonPart;
     private Integer quantity;
 }

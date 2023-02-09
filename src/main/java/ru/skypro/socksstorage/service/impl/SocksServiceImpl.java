@@ -26,7 +26,7 @@ public class SocksServiceImpl implements SocksService {
     private final SocksMapper socksMapper;
 
     @Override
-    public String getQuantityOfSocks(String color, String operation, Byte cottonPart) {
+    public String getQuantityOfSocks(String color, String operation, Integer cottonPart) {
         Operation currentOperation = checkOperationAndReturnIt(operation);
         List<Socks> socksList = new ArrayList<>();
         switch (currentOperation) {

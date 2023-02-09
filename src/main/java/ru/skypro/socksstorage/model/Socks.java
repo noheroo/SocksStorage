@@ -13,15 +13,15 @@ public class Socks {
     @Column(name = "socks_id")
     private Integer id;
     @Size(min = 3,max = 50)
-    @NotBlank
-    @Column(name = "color")
+    @NotBlank(message = "color can't be empty")
+    @Column(name = "color",nullable = false, length = 50)
     private String color;
-    @Min(0)
-    @Max(100)
-    @Column(name = "cotton_part")
-    private Byte cottonPart;
-    @Positive
-    @Column(name = "quantity")
+    @Min(value = 0,message = "cotton part must be >=0")
+    @Max(value = 100,message = "cotton part must be <=100")
+    @Column(name = "cotton_part",nullable = false)
+    private Integer cottonPart;
+    @Positive(message = "quantity must be positive only")
+    @Column(name = "quantity",nullable = false)
     private Integer quantity;
 
 }

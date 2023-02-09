@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 public class OperateSocksDto {
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "color can't be empty")
+    @Size(min = 3, max = 50, message = "color must be more 2 characters and less 51 characters")
     private String color;
-    @Min(value = 0)
-    @Max(value = 100)
-    private Byte cottonPart;
-    @Positive
+    @Min(value = 0, message = "cotton part must be >=0")
+    @Max(value = 100, message = "cotton part must be <=100")
+    private Integer cottonPart;
+    @Positive(message = "quantity must be positive only")
     private Integer quantity;
 }
