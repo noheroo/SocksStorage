@@ -2,6 +2,7 @@ package ru.skypro.socksstorage.service;
 
 import ru.skypro.socksstorage.dto.OperateSocksDto;
 import ru.skypro.socksstorage.dto.SocksDto;
+import ru.skypro.socksstorage.model.Operation;
 
 public interface SocksService {
     /**
@@ -11,7 +12,7 @@ public interface SocksService {
      * @param cottonPart % of cotton which need
      * @return quantity of needed socks in storage
      */
-    String getQuantityOfSocks(String color, String operation, Integer cottonPart);
+    String getQuantityOfSocks(String color, Operation operation, Integer cottonPart);
 
     /**
      * Increase quantity of existed socks in storage or add new socks to storage if socks are not existed

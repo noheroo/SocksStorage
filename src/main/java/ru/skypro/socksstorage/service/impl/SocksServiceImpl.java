@@ -7,7 +7,6 @@ import ru.skypro.socksstorage.dto.OperateSocksDto;
 import ru.skypro.socksstorage.dto.SocksDto;
 import ru.skypro.socksstorage.exception.NeedDeleteMoreSocksThanExistException;
 import ru.skypro.socksstorage.exception.SocksNotFoundException;
-import ru.skypro.socksstorage.exception.WrongOperationException;
 import ru.skypro.socksstorage.mapper.SocksMapper;
 import ru.skypro.socksstorage.model.Operation;
 import ru.skypro.socksstorage.model.Socks;
@@ -26,10 +25,9 @@ public class SocksServiceImpl implements SocksService {
     private final SocksMapper socksMapper;
 
     @Override
-    public String getQuantityOfSocks(String color, String operation, Integer cottonPart) {
-        Operation currentOperation = checkOperationAndReturnIt(operation);
+    public String getQuantityOfSocks(String color, Operation operation, Integer cottonPart) {
         List<Socks> socksList = new ArrayList<>();
-        switch (currentOperation) {
+        switch (operation) {
             case EQUAL -> {
                 log.info("Get socks with cotton part equal {}", cottonPart);
                 socksList = socksRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
@@ -85,21 +83,6 @@ public class SocksServiceImpl implements SocksService {
         if (existingSocks.getQuantity() < outcomeSocksDto.getQuantity()) {
             log.warn("Not correct quantity");
             throw new NeedDeleteMoreSocksThanExistException();
-        }
-    }
-
-    /**
-     * Check correctness name of operation and return it
-     *
-     * @param operation incoming name of operation
-     * @return Enum operation
-     */
-    private Operation checkOperationAndReturnIt(String operation) {
-        try {
-            return Operation.valueOf(operation.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            log.warn("Wrong operation");
-            throw new WrongOperationException();
         }
     }
 }
